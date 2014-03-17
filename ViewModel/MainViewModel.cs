@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using iConto.Common;
 using iConto.Model;
 using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
@@ -26,7 +27,7 @@ namespace iConto.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
+        private readonly IDataService dataService;
 
         private IDialogService DialogService
         {
@@ -46,6 +47,7 @@ namespace iConto.ViewModel
                 {
                     _login = value;
                     RaisePropertyChanged(() => Login);
+                    AuthorizeCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -60,45 +62,89 @@ namespace iConto.ViewModel
                 {
                     _password = value;
                     RaisePropertyChanged(() => Password);
+                    AuthorizeCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        private RelayCommand _authorizeCommand;
-        public RelayCommand AuthorizeCommand
+        private AsyncRelayCommand _authorizeCommand;
+        public AsyncRelayCommand AuthorizeCommand
         {
             get
             {
-                return _authorizeCommand ?? (_authorizeCommand = new RelayCommand(() =>
+                return _authorizeCommand ?? (_authorizeCommand = new AsyncRelayCommand(async () =>
                 {
-                    _dataService.GetAsync<Session>("session").ContinueWith(async (t) =>
-                    {
-                        var payload = new Dictionary<string, string>() { 
+                    var sessionResponse = await dataService.GetAsync<CommonResponse<Session>>("session");
+
+                    var payload = new Dictionary<string, string>() { 
                             { "login", Login },
                             { "password",  Password }
                         };
 
-                        var authResponse = await _dataService.PostAsync<CommonResponse<AuthResponse>>("auth", payload);
-                        if (authResponse.Status == 0)
+                    var authResponse = await dataService.PostAsync<CommonResponse<AuthResponse>>("auth", payload);
+                    if (authResponse.Status == 0)
+                    {
+                        var userResponse = await dataService.GetAsync<CommonResponse<User>>("user/current");
+
+                        if (userResponse.Status == 0)
                         {
-                            //DialogService.ShowMessage("Успешно!", "success");
-                            try
+                            var name = getUserName(userResponse.Data);
+                            AuthorizeCommand.ReportProgress(() =>
                             {
-                                var user = await _dataService.FindOne<User>("current");
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                            }
-                            //var userResponse = await _dataService.GetAsync<CommonResponse<User>>("user/current"
+                                DialogService.ShowMessage("Привет, " + name, "success");
+                            });
                         }
                         else
                         {
-                            //DialogService.ShowMessage(authResponse.Message, "Ошибка " + authResponse.Status);
+                            AuthorizeCommand.ReportProgress(() =>
+                            {
+                                DialogService.ShowMessage(userResponse.Message, "Ошибка " + userResponse.Status);
+                            });
                         }
-                    });
+                    }
+                    else
+                    {
+                        AuthorizeCommand.ReportProgress(() =>
+                        {
+                            DialogService.ShowMessage(authResponse.Message, "Ошибка " + authResponse.Status);
+                        });
+                    }
                 }));
             }
+        }
+
+        //private RelayCommand __authorizeCommand;
+        //public RelayCommand __AuthorizeCommand
+        //{
+        //    get
+        //    {
+        //        return __authorizeCommand ?? (__authorizeCommand = new RelayCommand(() =>
+        //        {
+        //            Task.Run(async () =>
+        //            {
+                        
+
+        //            });
+        //        }));
+        //    }
+        //}
+
+        private static string getUserName(User user)
+        {
+            var name = user.Id.ToString();
+
+            if (!String.IsNullOrEmpty(user.FirstName) || !String.IsNullOrEmpty(user.LastName))
+            {
+                name = String.Join(" ", user.FirstName, user.LastName);
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(user.Nickname))
+                {
+                    name = user.Nickname;
+                }
+            }
+            return name;
         }
 
         /// <summary>
@@ -106,7 +152,7 @@ namespace iConto.ViewModel
         /// </summary>
         public MainViewModel(IDataService dataService)
         {
-            _dataService = dataService;  
+            this.dataService = dataService;  
         }
 
         ////public override void Cleanup()

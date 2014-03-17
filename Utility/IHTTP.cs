@@ -12,5 +12,10 @@ namespace iConto.Utility
         Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, string> data = null);
         Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, string> data = null);
         Task<ResponseType> DeleteAsync<ResponseType>(string resource);
+
+        //ResponseType Get<ResponseType>(string resource, Dictionary<string, string> query = null);
+        //ResponseType Post<ResponseType>(string resource, Dictionary<string, string> data = null);
+        //ResponseType Put<ResponseType>(string resource, Dictionary<string, string> data = null);
+        //ResponseType Delete<ResponseType>(string resource);
     }
 }

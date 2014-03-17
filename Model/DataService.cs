@@ -77,5 +77,26 @@ namespace iConto.Model
         {
             return _adapter.FindMany<EntityType>(ids);
         }
+
+
+        //public ResponseType> GetAsync<ResponseType>(string url, Dictionary<string, string> query = null)
+        //{
+        //    return _adapter.GetAsync<ResponseType>(url, query);
+        //}
+
+        //public ResponseType> PostAsync<ResponseType>(string url, Dictionary<string, string> data = null)
+        //{
+        //    return _adapter.PostAsync<ResponseType>(url, data);
+        //}
+
+        //public ResponseType> PutAsync<ResponseType>(string url, Dictionary<string, string> data = null)
+        //{
+        //    return _adapter.PutAsync<ResponseType>(url, data);
+        //}
+
+        //public ResponseType> DeleteAsync<ResponseType>(string url)
+        //{
+        //    return _adapter.DeleteAsync<ResponseType>(url);
+        //}
     }
 }

@@ -93,7 +93,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AsyncRelayCommand.cs" />
     <Compile Include="Common\BasePage.cs" />
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -131,7 +133,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
@@ -165,13 +169,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WP8">
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP8, Version=4.2.30.23483, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\MvvmLightLibs.4.2.30.0\lib\wp8\GalaSoft.MvvmLight.Extras.WP8.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WP8">
+    <Reference Include="GalaSoft.MvvmLight.WP8, Version=4.2.30.23483, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\MvvmLightLibs.4.2.30.0\lib\wp8\GalaSoft.MvvmLight.WP8.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\MvvmLightLibs.4.2.30.0\lib\wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">

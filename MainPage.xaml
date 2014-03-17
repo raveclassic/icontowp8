@@ -15,6 +15,11 @@
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True"
                             DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <common:BasePage.Resources>
+        <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </common:BasePage.Resources>
+        
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
@@ -52,7 +57,8 @@
                        Margin="12,0" />
             <TextBox Height="72" TextWrapping="Wrap" Text="{Binding Login, FallbackValue=№ телефона, Mode=TwoWay, TargetNullValue=№ телефона}"/>
             <TextBox Height="72" TextWrapping="Wrap" Text="{Binding Password, FallbackValue=Пароль, Mode=TwoWay, TargetNullValue=Пароль}"/>
-            <Button Content="Войти"  VerticalAlignment="Top" Command="{Binding AuthorizeCommand}"/>
+            <Button Content="Войти"  VerticalAlignment="Top" Command="{Binding AuthorizeCommand}"
+                    Visibility="{Binding AuthorizeCommand.IsExecuting, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Invert}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->

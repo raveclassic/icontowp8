@@ -57,5 +57,26 @@ namespace iConto.Design
         {
             throw new NotImplementedException();
         }
+
+
+        public ResponseType Get<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> query = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResponseType Post<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> data = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResponseType Put<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> data = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResponseType Delete<ResponseType>(string resource)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

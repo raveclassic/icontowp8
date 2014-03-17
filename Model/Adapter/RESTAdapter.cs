@@ -17,7 +17,7 @@ namespace iConto.Model.Adapter
     {
         #region static
 
-        private static Uri ICONTO_API_URL = new Uri(@"https://api.iconto.net/rest/2.0");
+        private static Uri ICONTO_API_URL = new Uri(@"https://api.iconto.net/rest/2.0/");
         private static Dictionary<Type, string> _entityResourceMap = new Dictionary<Type, string>()
         {
             { typeof(Session), "session" },
@@ -28,11 +28,22 @@ namespace iConto.Model.Adapter
 
         private ISerializer Serializer { get; set; }
 
+        private HttpClient httpClient;
+
         private string sid;       
 
         public RESTAdapter(ISerializer serializer)
         {
             Serializer = serializer;
+
+            var httpClientHanler = new HttpClientHandler()
+            {
+                CookieContainer = new CookieContainer(),
+            };
+
+            httpClient = new HttpClient(httpClientHanler);
+            httpClient.BaseAddress = ICONTO_API_URL;
+            httpClient.DefaultRequestHeaders.Add("X-Suppress-HTTP-Code", "1");
         }
 
 
@@ -80,21 +91,18 @@ namespace iConto.Model.Adapter
 
         private async Task<ResponseType> Request<ResponseType>(HttpMethod method, string url, Dictionary<string, string> data = null)
         {            
-            var client = new HttpClient();
-
             var request = new HttpRequestMessage(method, url);
 
-            var content = "";
             if (data != null)
             {
-                content = JsonConvert.SerializeObject(data);
-            } 
-            request.Content = new StringContent(content);
-            //request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            request.Content.Headers.Add("Content-Type", "application/json");
-            request.Content.Headers.Add("X-Suppress-HTTP-Code", "1");
+                request.Content = new StringContent(JsonConvert.SerializeObject(data));
+                if (method != HttpMethod.Get)
+                {
+                    request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                }
+            }
 
-            var response = await client.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
             var body = await response.Content.ReadAsStringAsync();
 
             return Serializer.Deserialize<ResponseType>(body);
@@ -102,18 +110,20 @@ namespace iConto.Model.Adapter
 
         public static string BuildUrl(string resource, string id = null, Dictionary<string, string> query = null)
         {
-            var url = String.Format("{0}/{1}", ICONTO_API_URL, resource);
+            var url = resource;
+
             if (id != null)
             {
-                url = String.Format("{0}/{1}", url, id);
+                url = String.Join("/", url, id);
             }
-            var uriBuilder = new UriBuilder(url);
+            
             if (query != null)
             {
-                uriBuilder.Query = String.Join("&", query.Select(pair => String.Format("{0}={1}", HttpUtility.UrlEncode(pair.Key), HttpUtility.UrlEncode(pair.Value))).OrderBy(s => s).ToArray());
+                var queryString = String.Join("&", query.Select(pair => String.Format("{0}={1}", HttpUtility.UrlEncode(pair.Key), HttpUtility.UrlEncode(pair.Value))).OrderBy(s => s).ToArray());
+                url = String.Join("?", url, queryString);
             }
 
-            return uriBuilder.ToString();
+            return url;
         }
 
         #endregion
