@@ -1,7 +1,10 @@
 ﻿using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
 using iConto.Model.Serializer;
+using iConto.Services.Settings;
 using iConto.Utility;
+using Microsoft.Phone.Shell;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,35 +20,59 @@ namespace iConto.Model.Adapter
     {
         #region static
 
-        private static Uri ICONTO_API_URL = new Uri(@"https://api.iconto.net/rest/2.0/");
+        private const string ICONTO_API_SID = "ICONTO_API_SID";
+        private const string PHPSESSID = "PHPSESSID";
+
+        private static Uri ICONTO_API_URL = new Uri(@"https://api.dev.iconto.net/rest/2.0/");
         private static Dictionary<Type, string> _entityResourceMap = new Dictionary<Type, string>()
         {
             { typeof(Session), "session" },
-            { typeof(User), "user" }
+            { typeof(User), "user" },
+            { typeof(Card), "card" },
+            { typeof(Bank), "bank" }
         };
 
         #endregion static
 
         private ISerializer Serializer { get; set; }
 
-        private HttpClient httpClient;
+        private ISettingsService SettingsService { get; set; }
 
-        private string sid;       
+        private CookieContainer cookieContainer;
+        private HttpClient client;
+        public HttpClient Client
+        {
+            get
+            {
+                if (client != null) return client;
+
+                cookieContainer = new CookieContainer();
+                var sid = SettingsService.Get(ICONTO_API_SID);
+                if (sid != null)
+                {
+                    cookieContainer.Add(ICONTO_API_URL, new Cookie(PHPSESSID, (string)sid, "/", "iconto.net"));
+                }
+
+                var httpClientHanler = new HttpClientHandler()
+                {
+                    CookieContainer = cookieContainer
+                };
+
+                client = new HttpClient(httpClientHanler)
+                {
+                    BaseAddress = ICONTO_API_URL
+                };
+                client.DefaultRequestHeaders.Add("X-Suppress-HTTP-Code", "1");
+
+                return client;
+            }
+        }
 
         public RESTAdapter(ISerializer serializer)
         {
             Serializer = serializer;
-
-            var httpClientHanler = new HttpClientHandler()
-            {
-                CookieContainer = new CookieContainer(),
-            };
-
-            httpClient = new HttpClient(httpClientHanler);
-            httpClient.BaseAddress = ICONTO_API_URL;
-            httpClient.DefaultRequestHeaders.Add("X-Suppress-HTTP-Code", "1");
+            SettingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
         }
-
 
         public async Task<EntityType> FindOne<EntityType>(string id)
         {
@@ -65,22 +92,21 @@ namespace iConto.Model.Adapter
             return response.Data.Items;
         }
 
-        public async Task<List<EntityType>> FindMany<EntityType>(object[] ids)
+        public async Task<List<EntityType>> FindMany<EntityType>(long[] ids)
         {
             if (ids.Length == 0) return new List<EntityType>();
 
-            Dictionary<string, string> query = new Dictionary<string, string>();
+            List<KeyValuePair<string, string>> query = new List<KeyValuePair<string, string>>();
             foreach (var id in ids)
             {
-                query.Add("ids[]", id.ToString());
+                query.Add(new KeyValuePair<string, string>("ids[]", id.ToString()));
             }
-
             var response = await GetAsync<CommonArrayResponse<EntityType>>(_entityResourceMap[typeof(EntityType)], query);
 
             return response.Data.Items;
         }
 
-        public async Task<List<EntityType>> Filter<EntityType>(Dictionary<string, string> query)
+        public async Task<List<EntityType>> Filter<EntityType>(List<KeyValuePair<string, string>> query)
         {
             var response = await GetAsync<CommonArrayResponse<EntityType>>(_entityResourceMap[typeof(EntityType)], query);
 
@@ -102,13 +128,15 @@ namespace iConto.Model.Adapter
                 }
             }
 
-            var response = await httpClient.SendAsync(request);
+            var response = await Client.SendAsync(request);
+            var sid = cookieContainer.GetCookies(ICONTO_API_URL)[PHPSESSID].Value;
+            SettingsService.Set(ICONTO_API_SID, sid);
             var body = await response.Content.ReadAsStringAsync();
 
             return Serializer.Deserialize<ResponseType>(body);
         }
 
-        public static string BuildUrl(string resource, string id = null, Dictionary<string, string> query = null)
+        public static string BuildUrl(string resource, string id = null, List<KeyValuePair<string, string>> query = null)
         {
             var url = resource;
 
@@ -130,7 +158,24 @@ namespace iConto.Model.Adapter
 
         #region shortcut methods
 
-        public Task<ResponseType> GetAsync<ResponseType>(string resource, Dictionary<string, string> query = null)
+        public Task<ResponseType> GetAsync<ResponseType>(List<KeyValuePair<string, string>> query = null)
+        {
+            return GetAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], query);
+        }
+        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, string> data = null)
+        {
+            return PostAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], data);
+        }
+        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, string> data = null)
+        {
+            return PutAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], data);
+        }
+        public Task<ResponseType> DeleteAsync<ResponseType>()
+        {
+            return DeleteAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)]);
+        }
+
+        public Task<ResponseType> GetAsync<ResponseType>(string resource, List<KeyValuePair<string, string>> query = null)
         {
             return Request<ResponseType>(HttpMethod.Get, BuildUrl(resource, null, query));
         }

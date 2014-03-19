@@ -1,5 +1,6 @@
 ﻿using System;
 using iConto.Model;
+using System.Collections.Generic;
 
 namespace iConto.Design
 {
@@ -13,68 +14,43 @@ namespace iConto.Design
         //    callback(item, null);
         //}
 
+
         public System.Threading.Tasks.Task<EntityType> FindOne<EntityType>(string id)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<EntityType>> FindAll<EntityType>()
+        public System.Threading.Tasks.Task<List<EntityType>> FindAll<EntityType>()
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<EntityType>> Filter<EntityType>(System.Collections.Generic.Dictionary<string, string> query)
+        public System.Threading.Tasks.Task<List<EntityType>> Filter<EntityType>(List<KeyValuePair<string, string>> query)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<EntityType>> FindMany<EntityType>(object[] ids)
+        public System.Threading.Tasks.Task<List<EntityType>> FindMany<EntityType>(long[] ids)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> GetAsync<ResponseType>(string url)
+        public System.Threading.Tasks.Task<ResponseType> GetAsync<ResponseType>(string resource, List<KeyValuePair<string, string>> query = null)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> PostAsync<ResponseType>(string url, System.Collections.Generic.Dictionary<string, string> data = null)
+        public System.Threading.Tasks.Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> PutAsync<ResponseType>(string url, System.Collections.Generic.Dictionary<string, string> data = null)
+        public System.Threading.Tasks.Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> DeleteAsync<ResponseType>(string url)
-        {
-            throw new NotImplementedException();
-        }
-
-        public System.Threading.Tasks.Task<ResponseType> GetAsync<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> query = null)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public ResponseType Get<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> query = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseType Post<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> data = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseType Put<ResponseType>(string resource, System.Collections.Generic.Dictionary<string, string> data = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ResponseType Delete<ResponseType>(string resource)
+        public System.Threading.Tasks.Task<ResponseType> DeleteAsync<ResponseType>(string resource)
         {
             throw new NotImplementedException();
         }

@@ -12,8 +12,8 @@ namespace iConto.Model.Adapter
 
         Task<List<EntityType>> FindAll<EntityType>();
 
-        Task<List<EntityType>> Filter<EntityType>(Dictionary<string, string> query);
+        Task<List<EntityType>> Filter<EntityType>(List<KeyValuePair<string, string>> query);
 
-        Task<List<EntityType>> FindMany<EntityType>(object[] ids);
+        Task<List<EntityType>> FindMany<EntityType>(long[] ids);
     }
 }

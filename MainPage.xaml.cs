@@ -8,19 +8,30 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using iConto.Resources;
+using iConto.ViewModel;
 using iConto.Common;
 
 namespace iConto
 {
     public partial class MainPage : BasePage
     {
+        private MainPageViewModel VM { get; set; }
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
 
+            VM = (MainPageViewModel)DataContext;
+
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            //VM.NavigatedToCommand.Execute(e);
         }
 
         // Sample code for building a localized ApplicationBar

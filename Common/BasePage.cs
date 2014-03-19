@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using iConto.Services.Dialog;
+using iConto.Services.Navigation;
 using Microsoft.Phone.Controls;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,24 @@ using System.Windows;
 
 namespace iConto.Common
 {
-    public partial class BasePage : PhoneApplicationPage, IDialogService
+    public partial class BasePage : PhoneApplicationPage, IDialogService, INavigationService
     {
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            SimpleIoc.Default.Register<IDialogService>(() => this);
+            SimpleIoc.Default.Register<INavigationService>(() => this);
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            SimpleIoc.Default.Unregister<IDialogService>();
+            SimpleIoc.Default.Unregister<INavigationService>();
+            base.OnNavigatedFrom(e);
+        }
+
+        #region IDialogService members
+
         public void ShowMessage(string message, string title)
         {
             MessageBox.Show(message, title, MessageBoxButton.OK);
@@ -31,23 +48,31 @@ namespace iConto.Common
             }
         }
 
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        #endregion        
+
+        #region INavigationService members
+
+        public void Navigate(Uri uri, Dictionary<string, string> query = null)
         {
-            Messenger.Default.Register<DialogMessage>(this, HandleDialogMessage);
-            SimpleIoc.Default.Register<IDialogService>(() => this);
-            base.OnNavigatedTo(e);
+            NavigationService.Navigate(uri);
         }
 
-        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        public void GoBack()
         {
-            Messenger.Default.Unregister<DialogMessage>(this, HandleDialogMessage);
-            SimpleIoc.Default.Unregister<IDialogService>();
-            base.OnNavigatedFrom(e);
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
 
-        protected void HandleDialogMessage(DialogMessage message)
+        public void GoForward()
         {
-            ShowMessage(message.Content, message.Caption);
+            if (NavigationService.CanGoForward)
+            {
+                NavigationService.GoForward();
+            }
         }
+
+        #endregion
     }
 }

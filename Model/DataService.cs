@@ -18,6 +18,11 @@ namespace iConto.Model
             _adapter = new RESTAdapter(new JSONSerializer());
         }
 
+        public void SetSid(string sid)
+        {
+            
+        }
+
         //public void GetData(Action<DataItem, Exception> callback)
         //{
         //    // Use this to connect to the actual data service
@@ -37,8 +42,27 @@ namespace iConto.Model
         //        Console.WriteLine(response);
         //    });
         //}
+        public Task<ResponseType> GetAsync<ResponseType>(List<KeyValuePair<string, string>> query = null)
+        {
+            return _adapter.GetAsync<ResponseType>(query);
+        }
 
-        public Task<ResponseType> GetAsync<ResponseType>(string url, Dictionary<string, string> query = null)
+        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, string> data = null)
+        {
+            return _adapter.PostAsync<ResponseType>(data);
+        }
+
+        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, string> data = null)
+        {
+            return _adapter.PutAsync<ResponseType>(data);
+        }
+
+        public Task<ResponseType> DeleteAsync<ResponseType>()
+        {
+            return _adapter.DeleteAsync<ResponseType>();
+        }
+
+        public Task<ResponseType> GetAsync<ResponseType>(string url, List<KeyValuePair<string, string>> query = null)
         {
             return _adapter.GetAsync<ResponseType>(url, query);
         }
@@ -68,18 +92,18 @@ namespace iConto.Model
             return _adapter.FindAll<EntityType>();
         }
 
-        public Task<List<EntityType>> Filter<EntityType>(Dictionary<string, string> query)
+        public Task<List<EntityType>> Filter<EntityType>(List<KeyValuePair<string, string>> query)
         {
             return _adapter.Filter<EntityType>(query);
         }
 
-        public Task<List<EntityType>> FindMany<EntityType>(object[] ids)
+        public Task<List<EntityType>> FindMany<EntityType>(long[] ids)
         {
             return _adapter.FindMany<EntityType>(ids);
         }
 
 
-        //public ResponseType> GetAsync<ResponseType>(string url, Dictionary<string, string> query = null)
+        //public ResponseType> GetAsync<ResponseType>(string url, List<KeyValuePair<string, string>> = null)
         //{
         //    return _adapter.GetAsync<ResponseType>(url, query);
         //}

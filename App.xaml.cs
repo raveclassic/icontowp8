@@ -9,6 +9,10 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using iConto.Resources;
 using iConto.ViewModel;
+using System.Collections;
+using System.Windows.Media;
+using Microsoft.Practices.ServiceLocation;
+using iConto.Services.Settings;
 
 namespace iConto
 {
@@ -25,11 +29,14 @@ namespace iConto
         /// </summary>
         public App()
         {
-            // Global handler for uncaught exceptions.
+            // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
             // Standard XAML initialization
             InitializeComponent();
+
+            //MergeTheme("/Resources/Themes/ThemeResources.xaml");
+            //(App.Current.Resources["PhoneBackgroundBrush"] as SolidColorBrush).Color = Colors.White;
 
             // Phone-specific initialization
             InitializePhoneApplication();
@@ -56,6 +63,39 @@ namespace iConto
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+        }
+
+        //private void OverrideTheme()
+        //{
+        //    //(App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush).Color = Colors.Black;
+        //    //((SolidColorBrush)Resources["PhoneBackgroundBrush"]).Color = Colors.White;
+        //    //((SolidColorBrush)Resources["PhoneForegroundBrush"]).Color = ((SolidColorBrush)Resources["iContoDarkGreyBrush"]).Color;
+        //    var uri = new Uri("/Resources/Themes/ThemeResources.xaml", UriKind.Relative);
+        //    var themeResourceDictionary = new ResourceDictionary()
+        //    {
+        //        Source = uri
+        //    };
+        //}
+
+        private void MergeTheme(string path)
+        {
+            var dictionary = new ResourceDictionary();
+
+            var styles = new ResourceDictionary();
+            var source = new Uri(String.Format(path), UriKind.Relative);
+            styles.Source = source;
+
+            dictionary.MergedDictionaries.Add(styles);
+            var appResources = Current.Resources;
+            foreach (DictionaryEntry entry in dictionary.MergedDictionaries[0])
+            {
+                var newBrush = entry.Value as SolidColorBrush;
+                var existingBrush = appResources[entry.Key] as SolidColorBrush;
+                if (existingBrush != null && newBrush != null)
+                {
+                    existingBrush.Color = newBrush.Color;
+                }
+            }
 
         }
 
@@ -75,12 +115,14 @@ namespace iConto
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<ISettingsService>().Save();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<ISettingsService>().Save();
             ViewModelLocator.Cleanup();
         }
 
@@ -117,7 +159,9 @@ namespace iConto
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            //RootFrame = new PhoneApplicationFrame();
+            // enable transitions
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             DispatcherHelper.Initialize();

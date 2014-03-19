@@ -7,6 +7,8 @@ using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
 using iConto.Model.Serializer;
 using iConto.Services.Dialog;
+using iConto.Services.Navigation;
+using iConto.Services.Settings;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
@@ -25,9 +27,10 @@ namespace iConto.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase
     {
-        private readonly IDataService dataService;
+        private readonly IDataService DataService;
+        private readonly ISettingsService settingsService;
 
         private IDialogService DialogService
         {
@@ -36,6 +39,34 @@ namespace iConto.ViewModel
                 return ServiceLocator.Current.GetInstance<IDialogService>();
             }
         }
+        private INavigationService NavigationService
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<INavigationService>();
+            }
+        }
+
+        #region Sid
+        private string sid;
+        public string Sid
+        {
+            get
+            {
+                return sid;
+            }
+            set
+            {
+                if (sid != value)
+                {
+                    sid = value;
+                    RaisePropertyChanged(() => Sid);
+                }
+            }
+        }
+        #endregion
+
+        #region Login
 
         private string _login = "79043373051";
         public string Login
@@ -52,6 +83,10 @@ namespace iConto.ViewModel
             }
         }
 
+        #endregion
+
+        #region Password
+
         private string _password = "1234";
         public string Password
         {
@@ -67,31 +102,47 @@ namespace iConto.ViewModel
             }
         }
 
+        #endregion
+
+        #region AuthorizeCommand
+
         private AsyncRelayCommand _authorizeCommand;
+
+        private bool canExecuteAuthorizeCommand()
+        {
+            return !String.IsNullOrEmpty(Login) && !String.IsNullOrEmpty(Password) && !AuthorizeCommand.IsExecuting;
+        }
+
         public AsyncRelayCommand AuthorizeCommand
         {
             get
             {
                 return _authorizeCommand ?? (_authorizeCommand = new AsyncRelayCommand(async () =>
                 {
-                    var sessionResponse = await dataService.GetAsync<CommonResponse<Session>>("session");
+                    //var sessionResponse = await DataService.GetAsync<CommonResponse<Session>>("session");
+
+                    //AuthorizeCommand.ReportProgress(() =>
+                    //{
+                    //    settingsService.Set("ICONTO_API_SID", sessionResponse.Data.Id);
+                    //    Sid = sessionResponse.Data.Id;
+                    //});
 
                     var payload = new Dictionary<string, string>() { 
-                            { "login", Login },
-                            { "password",  Password }
+                            {"login", Login},
+                            {"password", Password}
                         };
 
-                    var authResponse = await dataService.PostAsync<CommonResponse<AuthResponse>>("auth", payload);
+                    var authResponse = await DataService.PostAsync<CommonResponse<AuthResponse>>("auth", payload);
                     if (authResponse.Status == 0)
                     {
-                        var userResponse = await dataService.GetAsync<CommonResponse<User>>("user/current");
+                        var userResponse = await DataService.GetAsync<CommonResponse<User>>("user/current");
 
                         if (userResponse.Status == 0)
                         {
                             var name = getUserName(userResponse.Data);
                             AuthorizeCommand.ReportProgress(() =>
                             {
-                                DialogService.ShowMessage("Привет, " + name, "success");
+                                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                             });
                         }
                         else
@@ -109,25 +160,11 @@ namespace iConto.ViewModel
                             DialogService.ShowMessage(authResponse.Message, "Ошибка " + authResponse.Status);
                         });
                     }
-                }));
+                }, canExecuteAuthorizeCommand));
             }
         }
 
-        //private RelayCommand __authorizeCommand;
-        //public RelayCommand __AuthorizeCommand
-        //{
-        //    get
-        //    {
-        //        return __authorizeCommand ?? (__authorizeCommand = new RelayCommand(() =>
-        //        {
-        //            Task.Run(async () =>
-        //            {
-                        
-
-        //            });
-        //        }));
-        //    }
-        //}
+        #endregion
 
         private static string getUserName(User user)
         {
@@ -150,9 +187,10 @@ namespace iConto.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IDataService dataService)
+        public LoginViewModel(IDataService dataService, ISettingsService settingsService)
         {
-            this.dataService = dataService;  
+            this.DataService = dataService;
+            this.settingsService = settingsService;
         }
 
         ////public override void Cleanup()
@@ -161,5 +199,37 @@ namespace iConto.ViewModel
 
         ////    base.Cleanup();
         ////}
+
+        #region NavigatedToCommand
+
+        private RelayCommand navigatedToCommand;
+        public RelayCommand NavigatedToCommand
+        {
+            get
+            {
+                return navigatedToCommand ?? (navigatedToCommand = new RelayCommand(() =>
+                {                    
+                }));
+            }
+        }
+
+        #endregion
+
+        #region NavigatedFromCommand
+
+        private RelayCommand navigatedFromCommand;
+        public RelayCommand NavigatedFromCommand
+        {
+            get
+            {
+                return navigatedFromCommand ?? (navigatedFromCommand = new RelayCommand(() =>
+                {
+
+                }));
+            }
+        }
+
+        #endregion
+
     }
 }

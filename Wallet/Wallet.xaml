@@ -1,0 +1,61 @@
+﻿<common:BasePage x:Class="iConto.Wallet.Wallet"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:ignore="http://www.ignore.com"
+                            xmlns:common="clr-namespace:iConto.Common"
+                            mc:Ignorable="d ignore"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="False"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            DataContext="{Binding Wallet, Source={StaticResource Locator}}">
+
+    <common:BasePage.Resources>
+        <DataTemplate x:Key="BankCardTemplate">
+            <Button Style="{StaticResource TextOnlyButtonStyle}" toolkit:TiltEffect.IsTiltEnabled="True">
+                <StackPanel>
+                    <TextBlock Text="{Binding CardNumber}" Style="{StaticResource TextBoxStyle}"/>
+                    <TextBlock Text="{Binding Name, Source={Binding Bank}}" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+    </common:BasePage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <phone:Pivot Grid.Row="1" Title="Кошелёк" Foreground="{StaticResource ForegroundBrush}"
+                     HeaderTemplate="{StaticResource PanoramaItemHeaderTemplate}" TitleTemplate="{StaticResource PanoramaTitleTemplate}">
+            <phone:PivotItem Header="Банковские">
+                <Grid>
+                    <phone:LongListSelector ItemsSource="{Binding BankCards}" ItemTemplate="{StaticResource BankCardTemplate}">
+                    </phone:LongListSelector>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Наличные">
+                <Grid>
+                    <phone:LongListSelector ItemsSource="{Binding CashCards}">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CardNumber}" Foreground="Black"/>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="iConto">
+                
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+
+</common:BasePage >
