@@ -47,12 +47,12 @@ namespace iConto.Model
             return _adapter.GetAsync<ResponseType>(query);
         }
 
-        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, string> data = null)
+        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, object> data = null)
         {
             return _adapter.PostAsync<ResponseType>(data);
         }
 
-        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, string> data = null)
+        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, object> data = null)
         {
             return _adapter.PutAsync<ResponseType>(data);
         }
@@ -67,12 +67,12 @@ namespace iConto.Model
             return _adapter.GetAsync<ResponseType>(url, query);
         }
 
-        public Task<ResponseType> PostAsync<ResponseType>(string url, Dictionary<string, string> data = null)
+        public Task<ResponseType> PostAsync<ResponseType>(string url, Dictionary<string, object> data = null)
         {
             return _adapter.PostAsync<ResponseType>(url, data);
         }
 
-        public Task<ResponseType> PutAsync<ResponseType>(string url, Dictionary<string, string> data = null)
+        public Task<ResponseType> PutAsync<ResponseType>(string url, Dictionary<string, object> data = null)
         {
             return _adapter.PutAsync<ResponseType>(url, data);
         }

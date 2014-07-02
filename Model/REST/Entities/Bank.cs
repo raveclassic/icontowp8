@@ -27,7 +27,7 @@ namespace iConto.Model.REST.Entities
         public string Url { get; set; }
 
         [OnDeserialized]
-        private void OnDeserialized(StreamingContext context)
+        public void OnDeserialized(StreamingContext context)
         {
             if (this.Url.StartsWith(@"//"))
             {

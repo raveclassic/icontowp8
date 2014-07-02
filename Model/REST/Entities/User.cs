@@ -30,6 +30,9 @@ namespace iConto.Model.REST.Entities
 
         [DataMember(Name = "last_name")]
         public string LastName { get; set; }
+
+        [DataMember(Name = "balance")]
+        public double Balance { get; set; }
         //login: ''
         //nickname: ''
         //birthday: ''

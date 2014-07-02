@@ -9,8 +9,8 @@ namespace iConto.Utility
     public interface IHTTP
     {
         Task<ResponseType> GetAsync<ResponseType>(string resource, List<KeyValuePair<string, string>> query = null);
-        Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, string> data = null);
-        Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, string> data = null);
+        Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, object> data = null);
+        Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, object> data = null);
         Task<ResponseType> DeleteAsync<ResponseType>(string resource);
 
         //ResponseType Get<ResponseType>(string resource, Dictionary<string, string> query = null);

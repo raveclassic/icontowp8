@@ -1,0 +1,93 @@
+ <ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:System="clr-namespace:System;assembly=mscorlib"
+  xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+
+
+
+
+        <!--<Color x:Key="IcontoBlueColor">#FF1DACFB</Color>
+    <Color x:Key="IcontoGreenColor">#FFADDE45</Color>
+    <Color x:Key="IcontoGreyColor">#FF838383</Color>
+    <Color x:Key="IcontoLightGreyColor">#FFEFEFEF</Color>
+    <Color x:Key="IcontoDarkGreyColor">#FF414042</Color>
+    <Color x:Key="IcontoForegroundColor">#FF1DACFB</Color>
+    <Color x:Key="IcontoBackgroundColor">#FFFFFFFF</Color>
+
+    <SolidColorBrush x:Key="IcontoBlueBrush" Color="{StaticResource IcontoBlueColor}"/>
+    <SolidColorBrush x:Key="IcontoGreenBrush" Color="{StaticResource IcontoGreenColor}"/>
+    <SolidColorBrush x:Key="IcontoGreyBrush" Color="{StaticResource IcontoGreyColor}"/>
+    <SolidColorBrush x:Key="IcontoDarkGreyBrush" Color="{StaticResource IcontoDarkGreyColor}"/>
+    <SolidColorBrush x:Key="IcontoLightGreyBrush" Color="{StaticResource IcontoLightGreyColor}"/>
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource IcontoBackgroundColor}"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource IcontoDarkGreyColor}"/>
+
+    <DataTemplate x:Key="PanoramaTitleTemplate">
+        <TextBlock Text="{Binding}" FontSize="23" Foreground="{StaticResource ForegroundBrush}" FontFamily="{StaticResource UbuntuLightFont}" FontWeight="Bold"/>
+    </DataTemplate>
+    <DataTemplate x:Key="PanoramaItemHeaderTemplate">
+        <TextBlock Text="{Binding}" FontFamily="{StaticResource UbuntuLightFont}" FontSize="45" Margin="0" Padding="0, 20"/>
+    </DataTemplate>
+
+    <FontFamily x:Key="UbuntuLightFont">/Assets/ubuntu-font-family-0.80/Ubuntu-L.ttf#Ubuntu Light</FontFamily>
+
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Style.Setters>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource IcontoGreyBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource IcontoGreyBrush}"/>
+            <Setter Property="SelectionBackground" Value="{StaticResource PhoneAccentBrush}"/>
+            <Setter Property="SelectionForeground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontFamily" Value="{StaticResource UbuntuLightFont}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            <Setter Property="FontFamily" Value="{StaticResource UbuntuLightFont}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{StaticResource UbuntuLightFont}"/>
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ForegroundBrush}"/>
+        </Style.Setters>
+    </Style>
+
+    <ControlTemplate x:Key="TextOnlyButtonControlTemplate" TargetType="Button">
+        <Border HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="MouseOver"/>
+                    <VisualState x:Name="Pressed"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <ContentControl Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                />
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="TextOnlyButtonStyle" TargetType="Button">
+        <Setter Property="Template" Value="{StaticResource TextOnlyButtonControlTemplate}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="toolkit:TiltEffect.IsTiltEnabled" Value="True"/>
+    </Style>-->
+
+</ResourceDictionary>
+
+  

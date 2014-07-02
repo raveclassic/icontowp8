@@ -40,12 +40,12 @@ namespace iConto.Design
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
+        public System.Threading.Tasks.Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, object> data = null)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
+        public System.Threading.Tasks.Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, object> data = null)
         {
             throw new NotImplementedException();
         }

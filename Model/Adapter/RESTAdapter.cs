@@ -1,13 +1,14 @@
 ﻿using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
 using iConto.Model.Serializer;
-using iConto.Services.Settings;
 using iConto.Utility;
+using Iconto.PCL.Services.Settings;
 using Microsoft.Phone.Shell;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -29,7 +30,8 @@ namespace iConto.Model.Adapter
             { typeof(Session), "session" },
             { typeof(User), "user" },
             { typeof(Card), "card" },
-            { typeof(Bank), "bank" }
+            { typeof(Bank), "bank" },
+            { typeof(REST.Entities.Wallet), "wallet" }
         };
 
         #endregion static
@@ -115,24 +117,31 @@ namespace iConto.Model.Adapter
 
         #region privates
 
-        private async Task<ResponseType> Request<ResponseType>(HttpMethod method, string url, Dictionary<string, string> data = null)
+        private async Task<ResponseType> Request<ResponseType>(HttpMethod method, string url, Dictionary<string, object> data = null)
         {            
             var request = new HttpRequestMessage(method, url);
 
+            var content = "";
+
             if (data != null)
             {
-                request.Content = new StringContent(JsonConvert.SerializeObject(data));
+                content = JsonConvert.SerializeObject(data);
+                request.Content = new StringContent(content);
                 if (method != HttpMethod.Get)
                 {
                     request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 }
             }
 
+            Debugger.Log(0, "HTTP", String.Join(" ", method.Method, ICONTO_API_URL, HttpUtility.UrlDecode(url), content) + "\n");
+            
+
             var response = await Client.SendAsync(request);
             var sid = cookieContainer.GetCookies(ICONTO_API_URL)[PHPSESSID].Value;
             SettingsService.Set(ICONTO_API_SID, sid);
             var body = await response.Content.ReadAsStringAsync();
 
+            Debugger.Log(0, "HTTP", String.Join(" ", method.Method, ICONTO_API_URL, HttpUtility.UrlDecode(url), body, sid) + "\n\n");
             return Serializer.Deserialize<ResponseType>(body);
         }
 
@@ -162,11 +171,11 @@ namespace iConto.Model.Adapter
         {
             return GetAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], query);
         }
-        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, string> data = null)
+        public Task<ResponseType> PostAsync<ResponseType>(Dictionary<string, object> data = null)
         {
             return PostAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], data);
         }
-        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, string> data = null)
+        public Task<ResponseType> PutAsync<ResponseType>(Dictionary<string, object> data = null)
         {
             return PutAsync<ResponseType>(_entityResourceMap[typeof(ResponseType)], data);
         }
@@ -179,11 +188,11 @@ namespace iConto.Model.Adapter
         {
             return Request<ResponseType>(HttpMethod.Get, BuildUrl(resource, null, query));
         }
-        public Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
+        public Task<ResponseType> PostAsync<ResponseType>(string resource, Dictionary<string, object> data = null)
         {
             return Request<ResponseType>(HttpMethod.Post, BuildUrl(resource, null, null), data);
         }
-        public Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, string> data = null)
+        public Task<ResponseType> PutAsync<ResponseType>(string resource, Dictionary<string, object> data = null)
         {
             return Request<ResponseType>(HttpMethod.Put, BuildUrl(resource, null, null), data);
         }

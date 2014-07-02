@@ -6,7 +6,7 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:ignore="http://www.ignore.com"
-                            xmlns:common="clr-namespace:iConto.Common"
+                            xmlns:common="clr-namespace:Iconto.PCL.Common;assembly=Iconto.PCL"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             mc:Ignorable="d ignore"
                             
@@ -46,6 +46,20 @@
             <phone:PanoramaItem Header="iConto.Wallet" HeaderTemplate="{StaticResource PanoramaItemHeaderTemplate}">
                 <Grid x:Name="WalletLayout" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <Grid.Resources>
+                        <Style x:Key="Test" TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Button Foreground="{StaticResource BackgroundBrush}"
+                                                Background="{StaticResource IcontoBlueBrush}"
+                                                Style="{StaticResource TextOnlyButtonStyle}"
+                                                Content="{TemplateBinding Content}"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        
                         <Style x:Key="GridButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}"> 
                             <Style.Setters>
                                 <Setter Property="Height" Value="200"/>
@@ -56,6 +70,14 @@
                                 <Setter Property="Background" Value="{StaticResource IcontoBlueBrush}"/>
                                 <Setter Property="Foreground" Value="{StaticResource BackgroundBrush}"/>
                             </Style.Setters>
+                        </Style>
+                        <Style x:Key="WideGridButtonStyle" TargetType="Button" BasedOn="{StaticResource GridButtonStyle}">
+                            <Setter Property="Width" Value="400"/>
+                        </Style>
+                        <Style x:Key="GridButtonCountTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                            <Setter Property="FontSize" Value="60"/>
+                            <Setter Property="Foreground" Value="{StaticResource BackgroundBrush}"/>
+                            <Setter Property="Margin" Value="10,0,0,0"/>
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
@@ -69,7 +91,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource GridButtonStyle}"
-                            Name="CardsButton" Command="{Binding NavigateCommand}" CommandParameter="/wallet/wallet.xaml">
+                            Name="CardsButton" Command="{Binding NavigateCommand}" CommandParameter="/Wallet/Cards/CardsLayout.xaml">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -86,33 +108,14 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ContentControl Grid.Row="0" Style="{StaticResource DiscountIcon}" Height="50" Width="50"/>
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Grid.Row="0" Style="{StaticResource DiscountIcon}" Height="50" Width="50"/>
+                                <TextBlock Style="{StaticResource GridButtonCountTextStyle}" Text="2"/>
+                            </StackPanel>
                             <TextBlock Grid.Row="1" Margin="0,15,0,0">CashBack</TextBlock>
                         </Grid>
                     </Button>
                     <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource GridButtonStyle}"
-                            Name="HistoryButton">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ContentControl Grid.Row="0" Style="{StaticResource Transaction-FeeIcon}" Height="50" Width="50"/>
-                            <TextBlock Grid.Row="1" Margin="0,15,0,0">История</TextBlock>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource GridButtonStyle}"
-                            Name="MessagesButton">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ContentControl Grid.Row="0" Style="{StaticResource MessagesIcon}" Height="50" Width="50"/>
-                            <TextBlock Grid.Row="1" Margin="0,15,0,0">Сообщения</TextBlock>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource GridButtonStyle}"
                             Name="ProfileButton">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -123,6 +126,33 @@
                             <TextBlock Grid.Row="1" Margin="0,15,0,0">Профиль</TextBlock>
                         </Grid>
                     </Button>
+                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource GridButtonStyle}"
+                            Name="MessagesButton">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <ContentControl Grid.Row="0" Style="{StaticResource MessagesIcon}" Height="50" Width="50"/>
+                                <TextBlock Text="3" Style="{StaticResource GridButtonCountTextStyle}"/>
+                            </StackPanel>
+                            <TextBlock Grid.Row="1" Margin="0,15,0,0">Сообщения</TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource WideGridButtonStyle}"
+                            Name="HistoryButton">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ContentControl Grid.Row="0" Style="{StaticResource Transaction-FeeIcon}" Height="50" Width="50"/>
+                            <TextBlock Grid.Row="1" Margin="0,15,0,0">История</TextBlock>
+                        </Grid>
+                    </Button>
+                    
+                    
                 </Grid>
 
                 <!--<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">

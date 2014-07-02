@@ -1,0 +1,138 @@
+﻿<common:BasePage x:Class="iConto.Wallet.Cards.CardsLayout"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:ignore="http://www.ignore.com"
+                            xmlns:common="clr-namespace:Iconto.PCL.Common;assembly=Iconto.PCL"
+                            mc:Ignorable="d ignore"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="False"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            DataContext="{Binding WalletCardsLayout, Source={StaticResource Locator}}"
+                 Name="CardsLayoutPage">
+
+    <common:BasePage.Resources>
+    	<!--<common:UnixTimeToDateConverter x:Key="UnixTimeToDateConverter"/>-->
+        <DataTemplate x:Key="BankCardTemplate">
+            <Button Style="{StaticResource TextOnlyButtonStyle}" toolkit:TiltEffect.IsTiltEnabled="True">
+                <StackPanel>
+                    <TextBlock Text="{Binding CardNumber}" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+        
+        <shell:ApplicationBar x:Key="BankCardsAppBar" Opacity="0.8">
+            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/Add.png" Text="Добавить"
+                                            Click="BankCardsAppBarAddButtonClick"/>
+        </shell:ApplicationBar>
+        <shell:ApplicationBar x:Key="CashCardsAppBar" Opacity="0.8">
+            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/Add.png" Text="Добавить"
+                                            Click="CashCardsAppBarAddButtonClick"/>
+        </shell:ApplicationBar>
+        
+        <DataTemplate x:Key="NewBackCardPopup">
+            <StackPanel>
+                <toolkit:PhoneTextBox Hint="Название кошёлька" Text="{Binding NewCashCard.Title, Mode=OneWay}" Name="NewCashCardTitle"
+                                      TextChanged="NewCashCardTitle_TextChanged"/>
+                <toolkit:PhoneTextBox Hint="Стартовый баланс" Text="{Binding NewCashCard.Balance, Mode=OneWay}" Name="NewCashCardBalance"
+                                      TextChanged="NewCashCardBalance_TextChanged"/>
+            </StackPanel>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="NewBankCardPopup">
+            <phone:WebBrowser IsScriptEnabled="True" Name="NewBankCardWebbrowser"/>
+        </DataTemplate>
+    </common:BasePage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <phone:Pivot Grid.Row="1" Title="Кошелёк" Foreground="{StaticResource ForegroundBrush}"
+                     HeaderTemplate="{StaticResource PanoramaItemHeaderTemplate}" TitleTemplate="{StaticResource PanoramaTitleTemplate}" SelectionChanged="Pivot_SelectionChanged"
+                     Name="Pivot">
+            <phone:PivotItem Header="Банковские" Name="BankCards">
+                <Grid>
+                    <phone:LongListSelector ItemsSource="{Binding BankCards}">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,20">
+                                	<TextBlock Text="{Binding CardNumber}" Style="{StaticResource PhoneTextTitle2Style}" Foreground="{StaticResource ForegroundBrush}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                	<TextBlock Text="{Binding Bank.Name}" Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="Наличные" Name="CashCards">
+                <Grid>
+                    <phone:LongListSelector ItemsSource="{Binding CashCards}">
+
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu>
+                                        <toolkit:MenuItem Header="Удалить" Command="{Binding DeleteCashCardCommand}" CommandParameter="{Binding}"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+
+                                <StackPanel Margin="0,0,0,20">
+                                    <TextBlock Text="{Binding Title}"  Style="{StaticResource PhoneTextTitle2Style}" Foreground="{StaticResource ForegroundBrush}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Баланс: " Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                        <TextBlock Text="{Binding Balance}"  Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                                        <TextBlock Text="руб." Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="На" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource IcontoGreyBrush}" FontFamily="{StaticResource UbuntuLightFont}" FontSize="15"/>
+                                        <TextBlock Text="{Binding BalanceUpdatedAt, Converter={StaticResource UnixTimeToDateStringConverter}}" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource IcontoGreyBrush}" FontFamily="{StaticResource UbuntuLightFont}" FontSize="15" Margin="0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem Header="iConto" Name="IcontoCards">
+                <StackPanel>
+                    <Button Style="{StaticResource TextOnlyButtonStyle}" Foreground="{StaticResource ForegroundBrush}" Margin="0,0,0,20"
+                            DataContext="{Binding IcontoWallet}">
+                        <StackPanel>
+                            <TextBlock Text="iConto.Wallet" Style="{StaticResource PhoneTextTitle2Style}" Foreground="{StaticResource ForegroundBrush}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                            <TextBlock Text="электронный кошелёк" Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Баланс: " Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                <TextBlock Text="{Binding Balance}"  Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                                <TextBlock Text="руб." Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource TextOnlyButtonStyle}" Foreground="{StaticResource ForegroundBrush}" Margin="0,0,0,20"
+                            DataContext="{Binding IcontoCashback}">
+                        <StackPanel>
+                            <TextBlock Text="iConto.Cashback" Style="{StaticResource PhoneTextTitle2Style}" Foreground="{StaticResource ForegroundBrush}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                            <TextBlock Text="сумма невыплаченных кэшбэков" Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Баланс: " Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}"/>
+                                <TextBlock Text="{Binding Balance}"  Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                                <TextBlock Text="руб." Foreground="{StaticResource IcontoGreyBrush}" Style="{StaticResource PhoneTextSubtleStyle}" FontFamily="{StaticResource UbuntuLightFont}" Margin="0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+
+</common:BasePage >

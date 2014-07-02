@@ -1,12 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using iConto.Common;
 using iConto.Model;
 using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
-using iConto.Services.Dialog;
-using iConto.Services.Navigation;
-using iConto.Services.Settings;
+using Iconto.PCL.Common;
+using Iconto.PCL.Services.Dialog;
+using Iconto.PCL.Services.Navigation;
+using Iconto.PCL.Services.Settings;
 using Microsoft.Phone.Shell;
 using Microsoft.Practices.ServiceLocation;
 using System;

@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace iConto.Model.REST.Entities
 {
+    public enum CardType
+    {
+        Bank = 0,
+        Cash = 1
+    }
+
     [DataContract]
     public class Card
     {
@@ -31,6 +37,9 @@ namespace iConto.Model.REST.Entities
         [DataMember(Name = "updated_at")]
         public long UpdatedAt { get; set; }
 
+        [DataMember(Name = "balance_updated_at")]
+        public long BalanceUpdatedAt { get; set; }
+
         [DataMember(Name = "bank_id")]
         public long BankId { get; set; }
         public Bank Bank { get; set; }
@@ -42,7 +51,7 @@ namespace iConto.Model.REST.Entities
         public bool Deleted { get; set; }
 
         [DataMember(Name = "type")]
-        public byte Type { get; set; }
+        public CardType Type { get; set; }
 
         [DataMember(Name = "title")]
         public string Title { get; set; }
@@ -54,7 +63,7 @@ namespace iConto.Model.REST.Entities
         public long CardTagId { get; set; }
 
         [OnDeserialized]
-        private void OnDeserialized(StreamingContext context)
+        public void OnDeserialized(StreamingContext context)
         {
             if (this.BankId == 0)
             {

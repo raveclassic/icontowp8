@@ -1,14 +1,14 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
-using iConto.Common;
 using iConto.Model;
 using iConto.Model.REST.Entities;
 using iConto.Model.REST.Responses;
 using iConto.Model.Serializer;
-using iConto.Services.Dialog;
-using iConto.Services.Navigation;
-using iConto.Services.Settings;
+using Iconto.PCL.Common;
+using Iconto.PCL.Services.Dialog;
+using Iconto.PCL.Services.Navigation;
+using Iconto.PCL.Services.Settings;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using System;
@@ -127,7 +127,7 @@ namespace iConto.ViewModel
                     //    Sid = sessionResponse.Data.Id;
                     //});
 
-                    var payload = new Dictionary<string, string>() { 
+                    var payload = new Dictionary<string, object>() { 
                             {"login", Login},
                             {"password", Password}
                         };

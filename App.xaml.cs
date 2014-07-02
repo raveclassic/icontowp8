@@ -12,7 +12,7 @@ using iConto.ViewModel;
 using System.Collections;
 using System.Windows.Media;
 using Microsoft.Practices.ServiceLocation;
-using iConto.Services.Settings;
+using Iconto.PCL.Services.Settings;
 
 namespace iConto
 {

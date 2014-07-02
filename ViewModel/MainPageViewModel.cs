@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using iConto.Services.Navigation;
+using Iconto.PCL.Services.Navigation;
 using Microsoft.Practices.ServiceLocation;
 
 namespace iConto.ViewModel

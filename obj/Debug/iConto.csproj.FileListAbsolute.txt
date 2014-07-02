@@ -1,3 +1,4 @@
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Assets\Icons\Add.png
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Resources\Themes\icons.xaml
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Resources\Themes\iConto.xaml
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Assets\ApplicationIcon.png
@@ -88,10 +89,13 @@ C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\App.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\SplashScreen.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\LoginPage.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\MainPage.g.cs
-C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\Wallet\Wallet.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.g.resources
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.Resources.AppResources.resources
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.csproj.GenerateResource.Cache
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.dll
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.pdb
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\XapCacheFile.xml
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\iConto.csprojResolveAssemblyReference.cache
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\obj\Debug\Wallet\Cards\CardsLayout.g.cs
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Iconto.PCL.dll
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Bin\Debug\Iconto.PCL.pdb

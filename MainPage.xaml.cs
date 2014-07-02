@@ -9,7 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using iConto.Resources;
 using iConto.ViewModel;
-using iConto.Common;
+using Iconto.PCL.Common;
 
 namespace iConto
 {

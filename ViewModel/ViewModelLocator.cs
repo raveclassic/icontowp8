@@ -13,8 +13,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using iConto.Model;
-using iConto.Services.Settings;
 using iConto.ViewModel.Wallet;
+using Iconto.PCL.Services.Settings;
 
 namespace iConto.ViewModel
 {
@@ -44,7 +44,7 @@ namespace iConto.ViewModel
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<SplashScreenViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
-            SimpleIoc.Default.Register<WalletViewModel>();
+            SimpleIoc.Default.Register<WalletCardsLayoutViewModel>();
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace iConto.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public WalletViewModel Wallet
+        public WalletCardsLayoutViewModel WalletCardsLayout
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<WalletViewModel>();
+                return ServiceLocator.Current.GetInstance<WalletCardsLayoutViewModel>();
             }
         }
 

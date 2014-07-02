@@ -9,7 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using iConto.Resources;
 using iConto.ViewModel;
-using iConto.Common;
+using Iconto.PCL.Common;
 
 namespace iConto
 {
@@ -31,7 +31,7 @@ namespace iConto
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            VM.NavigatedToCommand.Execute(e);
+            VM.NavigatedToCommand.Execute(null);
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

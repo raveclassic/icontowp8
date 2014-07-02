@@ -8,8 +8,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using iConto.Resources;
-using iConto.Common;
 using iConto.ViewModel;
+using Iconto.PCL.Common;
 
 namespace iConto
 {

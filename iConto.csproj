@@ -94,11 +94,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\AsyncRelayCommand.cs" />
-    <Compile Include="Common\BasePage.cs" />
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Messages\PaymentRequestMessage.cs" />
     <Compile Include="Model\REST\Entities\Bank.cs" />
     <Compile Include="Model\REST\Entities\Card.cs" />
+    <Compile Include="Model\REST\Entities\Order.cs" />
+    <Compile Include="Model\REST\Entities\Wallet.cs" />
+    <Compile Include="Model\REST\Responses\CreateCashCardResponse.cs" />
+    <Compile Include="Model\REST\Responses\CreateOrderResponse.cs" />
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -110,10 +112,6 @@
     <Compile Include="Model\Adapter\IAdapter.cs" />
     <Compile Include="Model\REST\Entities\User.cs" />
     <Compile Include="Model\REST\Responses\AuthResponse.cs" />
-    <Compile Include="Services\Dialog\IDialogService.cs" />
-    <Compile Include="Services\Navigation\INavigationService.cs" />
-    <Compile Include="Services\Settings\ISettingsService.cs" />
-    <Compile Include="Services\Settings\SettingsService.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -135,16 +133,20 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\SplashScreenViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="ViewModel\Wallet\WalletViewModel.cs" />
-    <Compile Include="Wallet\Wallet.xaml.cs">
-      <DependentUpon>Wallet.xaml</DependentUpon>
+    <Compile Include="ViewModel\Wallet\WalletCardsLayoutViewModel.cs" />
+    <Compile Include="Wallet\Cards\CardsLayout.xaml.cs">
+      <DependentUpon>CardsLayout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wallet\Cards\PaymentRequestMessageBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Content Include="Assets\Icons\Add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Themes\ThemeResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,7 +174,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Wallet\Wallet.xaml">
+    <Page Include="Wallet\Cards\CardsLayout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,10 +264,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Messages\" />
+    <Resource Include="struct.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="struct.png" />
+    <ProjectReference Include="Iconto.PCL\Iconto.PCL.csproj">
+      <Project>{1BAAB2FA-8547-44FC-964B-C8162856BC47}</Project>
+      <Name>Iconto.PCL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
