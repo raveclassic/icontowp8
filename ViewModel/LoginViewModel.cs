@@ -1,11 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
-using iConto.Model;
-using iConto.Model.REST.Entities;
-using iConto.Model.REST.Responses;
-using iConto.Model.Serializer;
 using Iconto.PCL.Common;
+using Iconto.PCL.Services.Data;
+using Iconto.PCL.Services.Data.REST.Entities;
+using Iconto.PCL.Services.Data.REST.Responses;
 using Iconto.PCL.Services.Dialog;
 using Iconto.PCL.Services.Navigation;
 using Iconto.PCL.Services.Settings;
@@ -27,7 +26,7 @@ namespace iConto.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class LoginViewModel : ViewModelBase
+    public class IcontoLoginViewModel : ViewModelBase
     {
         private readonly IDataService DataService;
         private readonly ISettingsService settingsService;
@@ -187,7 +186,7 @@ namespace iConto.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public LoginViewModel(IDataService dataService, ISettingsService settingsService)
+        public IcontoLoginViewModel(IDataService dataService, ISettingsService settingsService)
         {
             this.DataService = dataService;
             this.settingsService = settingsService;

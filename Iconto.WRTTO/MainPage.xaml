@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage x:Class="Iconto.WRTTO.MainPage"
+﻿<common:BasePage x:Class="Iconto.WRTTO.MainPage"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -6,6 +6,8 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:ignore="http://www.ignore.com"
+                            xmlns:common="clr-namespace:Iconto.PCL.Common;assembly=Iconto.PCL"
+							xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             mc:Ignorable="d ignore"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -13,15 +15,41 @@
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="True"
+                            shell:SystemTray.Opacity="0"
                             DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
-          Background="Transparent">
+          Background="{StaticResource WrttoTurquoiseBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+    	<StackPanel VerticalAlignment="Center" Grid.Row="1">
+    		<TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Name}"/>
+    		<Button Style="{StaticResource TurquoiseBorderedButtonStyle}" Content="ВЫЙТИ"
+    			Command="{Binding LogoutCommand}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    	</StackPanel>
 
         <!-- LOCALIZATION NOTE:
             To localize the displayed strings copy their values to appropriately named
@@ -43,31 +71,8 @@
          -->
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel"
-                    Grid.Row="0"
-                    Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION"
-                       Style="{StaticResource PhoneTextNormalStyle}"
-                       Margin="12,0" />
-            <TextBlock Text="page name"
-                       Margin="9,-7,0,0"
-                       Style="{StaticResource PhoneTextTitle1Style}" />
-        </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel"
-              Grid.Row="1"
-              Margin="12,0,12,0">
-
-            <TextBlock Text="{Binding WelcomeTitle}"
-                       Style="{StaticResource PhoneTextNormalStyle}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       FontSize="40" />
-
-        </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
@@ -78,4 +83,4 @@
         <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
     </Grid>
 
-</phone:PhoneApplicationPage>
+</common:BasePage>

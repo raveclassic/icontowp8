@@ -11,5 +11,6 @@ namespace Iconto.PCL.Services.Navigation
         void Navigate(Uri uri, Dictionary<string, string> query = null);
         void GoBack();
         void GoForward();
+        void ClearHistory();
     }
 }

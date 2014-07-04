@@ -1,8 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using iConto.Model;
-using iConto.Model.REST.Entities;
-using iConto.Model.REST.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +11,9 @@ using System.Diagnostics;
 using Iconto.PCL.Services.Settings;
 using Iconto.PCL.Services.Dialog;
 using Iconto.PCL.Common;
+using Iconto.PCL.Services.Data;
+using Iconto.PCL.Services.Data.REST.Entities;
+using Iconto.PCL.Services.Data.REST.Responses;
 
 namespace iConto.ViewModel.Wallet
 {
@@ -75,7 +75,7 @@ namespace iConto.ViewModel.Wallet
                 CashCards.Add(testCashCard);
                 CashCards.Add(testCashCard);
 
-                IcontoWallet = new iConto.Model.REST.Entities.Wallet()
+                IcontoWallet = new Iconto.PCL.Services.Data.REST.Entities.Wallet()
                 {
                     Balance = 4324234.34
                 };
@@ -88,8 +88,8 @@ namespace iConto.ViewModel.Wallet
         }
 
         #region iConto.Wallet
-        private iConto.Model.REST.Entities.Wallet icontoWallet;
-        public iConto.Model.REST.Entities.Wallet IcontoWallet
+        private Iconto.PCL.Services.Data.REST.Entities.Wallet icontoWallet;
+        public Iconto.PCL.Services.Data.REST.Entities.Wallet IcontoWallet
         {
             get
             {
@@ -181,7 +181,7 @@ namespace iConto.ViewModel.Wallet
                 return loadIcontoWalletCommand ?? (loadIcontoWalletCommand = new AsyncRelayCommand(async () =>
                 {
                     var walletIdsResponse = await DataService.GetAsync<CommonArrayResponse<long>>("wallet");
-                    var wallets = await DataService.FindMany<iConto.Model.REST.Entities.Wallet>(walletIdsResponse.Data.Items.ToArray());
+                    var wallets = await DataService.FindMany<Iconto.PCL.Services.Data.REST.Entities.Wallet>(walletIdsResponse.Data.Items.ToArray());
                     var wallet = wallets.First();
 
                     LoadIcontoWalletCommand.ReportProgress(() =>

@@ -74,6 +74,18 @@ namespace Iconto.PCL.Common
             }
         }
 
+        public void ClearHistory()
+        {
+            try
+            {
+                while (true)
+                {
+                    NavigationService.RemoveBackEntry();
+                }
+            }
+            catch { }
+        }
+
         #endregion
     }
 }

@@ -21,13 +21,6 @@
             <!--<common:UnixTimeToDateConverter x:Key="UnixTimeToDateConverter"/>-->
             <!--<common:UnixTimeToDateStringConverter x:Key="UnixTimeToDateStringConverter"/>-->
 
-
-            <!--colors-->
-            <Color x:Key="WrttoTurquoiseColor">#37b4b8</Color>
-
-            <!--brushes-->
-            <SolidColorBrush x:Key="WrttoTurquoiseBrush" Color="{StaticResource WrttoTurquoiseColor}"/>
-
         </ResourceDictionary>
 
     </Application.Resources>

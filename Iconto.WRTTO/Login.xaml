@@ -12,10 +12,31 @@
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="PortraitOrLandscape"
+                            SupportedOrientations="Portrait"
                             Orientation="Portrait"
                             shell:SystemTray.IsVisible="False"
-                            DataContext="{Binding Main, Source={StaticResource Locator}}">
+                            DataContext="{Binding Login, Source={StaticResource Locator}}">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -61,18 +82,40 @@
 <!--TitlePanel contains the name of the application and page title-->
 
         <StackPanel Margin="30,0" VerticalAlignment="Top">
-        	<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="Assets/Logo.png" Margin="94,40,94,0" Stretch="UniformToFill" Height="121" Width="232"/>
+        	<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="Assets/Logo.png" Margin="94,55,94,0" Stretch="UniformToFill" Height="121" Width="232"/>
+            
         	<TextBlock TextWrapping="Wrap" FontSize="30" Margin="0,56,0,0" FontFamily="Segoe WP Semibold" Height="52" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Вход" Foreground="#FFFFFFFF"></TextBlock>
-        	<Border BorderBrush="#FFE6E6E8" BorderThickness="0,0,0,2" Background="White" CornerRadius="4,4,0,0">
-        		<toolkit:PhoneTextBox TextWrapping="Wrap" Padding="19,10" BorderThickness="0" Background="{x:Null}" SelectionBackground="{x:Null}" SelectionForeground="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource WrttoFontLightGreyBrush}" UseLayoutRounding="True" Hint="Номер телефона" FontSize="24" InputScope="TelephoneNumber"/>
-        	</Border>
+        	
+            <Border BorderBrush="#FFE6E6E8" BorderThickness="0,0,0,2" Background="White" CornerRadius="4,4,0,0">
+                <toolkit:PhoneTextBox x:Name="LoginTextBox" Text="{Binding Login}" TextWrapping="NoWrap" Padding="4,10" BorderThickness="0" Background="{x:Null}" SelectionBackground="{StaticResource WrttoTurquoiseBrush}" SelectionForeground="White" BorderBrush="{x:Null}" Foreground="{StaticResource WrttoFontLightGreyBrush}" UseLayoutRounding="True" Hint="Номер телефона" FontSize="24" InputScope="TelephoneNumber" TextChanged="LoginTextBox_TextChanged">
+                    <toolkit:PhoneTextBox.HintStyle>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Padding" Value="4,10"/>
+                            <Setter Property="Foreground" Value="{StaticResource WrttoFontLightGreyBrush}"/>
+                        </Style>
+                    </toolkit:PhoneTextBox.HintStyle>
+                </toolkit:PhoneTextBox>
+            </Border>
+            
         	<Border BorderBrush="Black" BorderThickness="0" Background="White" CornerRadius="0,0,4,4">
-        		<toolkit:PhoneTextBox TextWrapping="Wrap" Hint="Пароль" FontSize="24" Padding="19,10" HorizontalContentAlignment="Stretch" BorderThickness="0" SelectionBackground="{x:Null}" SelectionForeground="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="{StaticResource WrttoFontLightGreyBrush}" InputScope="Password"/>
-        	</Border>
-        	<Button Content="ВОЙТИ" Style="{StaticResource LargeFilledButtonStyle}" Margin="0,10,0,0"/>
+                <toolkit:PhoneTextBox x:Name="PasswordTextBox" Text="{Binding Password}" TextWrapping="NoWrap" Hint="Пароль" FontSize="24" Padding="4,10" HorizontalContentAlignment="Stretch" BorderThickness="0" SelectionBackground="{StaticResource WrttoTurquoiseBrush}" SelectionForeground="White" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="{StaticResource WrttoFontLightGreyBrush}" InputScope="Password" TextChanged="PasswordTextBox_TextChanged" AcceptsReturn="True">
+                    <toolkit:PhoneTextBox.HintStyle>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Padding" Value="4,10"/>
+                            <Setter Property="Foreground" Value="{StaticResource WrttoFontLightGreyBrush}"/>
+                        </Style>
+                    </toolkit:PhoneTextBox.HintStyle>
+                </toolkit:PhoneTextBox>
+            </Border>
+            
+        	<Button Content="ВОЙТИ" Style="{StaticResource LargeFilledButtonStyle}" Margin="0,10,0,0"
+                    Command="{Binding AuthorizeCommand}"/>
+            
         	<Button Content="Забыли пароль?" HorizontalAlignment="Center" FontSize="24" toolkit:TiltEffect.IsTiltEnabled="True" Style="{StaticResource TextButtonStyle}"/>
-            <Button Content="РЕГИСТРАЦИЯ" Style="{StaticResource BorderedButtonStyle}" HorizontalAlignment="Center" Padding="45,5,45,6" Margin="0,90,0,0"></Button>
+            
+            <Button Content="РЕГИСТРАЦИЯ" Style="{StaticResource TurquoiseBorderedButtonStyle}" HorizontalAlignment="Center" Padding="45,5,45,6" Margin="0,72,0,0" VerticalAlignment="Top"></Button>
         </StackPanel>
+        
         <Grid Height="69" VerticalAlignment="Top" Margin="0" Grid.Row="1" Background="White">
             <Grid.ColumnDefinitions>
             	<ColumnDefinition Width="*"/>

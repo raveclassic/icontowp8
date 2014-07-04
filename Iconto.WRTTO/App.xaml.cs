@@ -9,6 +9,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Iconto.WRTTO.Resources;
 using Iconto.WRTTO.ViewModel;
+using Microsoft.Practices.ServiceLocation;
+using Iconto.PCL.Stores.Settings;
 
 namespace Iconto.WRTTO
 {
@@ -75,12 +77,14 @@ namespace Iconto.WRTTO
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<ISettingsStore>().Save();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<ISettingsStore>().Save();
             ViewModelLocator.Cleanup();
         }
 
@@ -117,7 +121,8 @@ namespace Iconto.WRTTO
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            //RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             DispatcherHelper.Initialize();

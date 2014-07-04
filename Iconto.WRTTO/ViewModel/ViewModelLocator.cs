@@ -13,6 +13,10 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using Iconto.WRTTO.Model;
+using Iconto.PCL.Clients.REST;
+using Iconto.PCL.Stores.Settings;
+using Iconto.PCL.Services.Dialog;
+using Iconto.PCL.Adapters.Encryption;
 
 namespace Iconto.WRTTO.ViewModel
 {
@@ -38,7 +42,28 @@ namespace Iconto.WRTTO.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
+            SimpleIoc.Default.Register<IEncryptedDataAdapter, EncryptedDataAdapter>();
+
+            SimpleIoc.Default.Register<ISettingsStore, SettingsStore>();
+
+            SimpleIoc.Default.Register<IRESTClient, RESTClient>();
+
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+        }
+
+        /// <summary>
+        /// Gets the Main property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LoginViewModel Login
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LoginViewModel>();
+            }
         }
 
         /// <summary>
@@ -53,7 +78,7 @@ namespace Iconto.WRTTO.ViewModel
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
-        }
+        }        
 
         /// <summary>
         /// Cleans up all the resources.

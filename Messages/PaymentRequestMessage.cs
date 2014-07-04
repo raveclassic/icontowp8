@@ -1,5 +1,4 @@
-﻿using iConto.Model.REST.Entities;
-using iConto.Model.REST.Responses;
+﻿using Iconto.PCL.Services.Data.REST.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

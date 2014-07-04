@@ -4,6 +4,8 @@
 	<SolidColorBrush x:Key="WrttoFontLightGreyBrush" Color="#FFB5B5B5"/>
 	<SolidColorBrush x:Key="WrttoPurpleBrush" Color="#FF625089"/>
     <SolidColorBrush x:Key="WrttoAccentPurpleBrush" Color="#FF4a396e"/>
+    <SolidColorBrush x:Key="WrttoTurquoiseBrush" Color="#FF37b4b8"/>
+    <SolidColorBrush x:Key="WrttoAccentTurquoiseBrush" Color="#FF2f999c"/>
 
     <CornerRadius x:Key="GlobalCornerRadius">4</CornerRadius>
     <Thickness x:Key="BaseBorderThickness">3</Thickness>
@@ -21,6 +23,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled"/>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
@@ -44,7 +47,10 @@
         <Setter Property="Padding" Value="45 19 45 19"/>
     </Style>
 
-    <Style x:Key="BorderedButtonStyle" TargetType="Button">
+    <Style x:Key="PurpleBorderedButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource WrttoPurpleBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WrttoPurpleBrush}"/>
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -52,6 +58,44 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource WrttoPurpleBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding Foreground}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{StaticResource GlobalCornerRadius}">
+                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TurquoiseBorderedButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource WrttoAccentTurquoiseBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding Foreground}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{StaticResource GlobalCornerRadius}">

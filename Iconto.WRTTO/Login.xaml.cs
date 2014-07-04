@@ -9,20 +9,46 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Iconto.WRTTO.Resources;
 using Iconto.PCL.Common;
+using Iconto.WRTTO.ViewModel;
 
 namespace Iconto.WRTTO
 {
     public partial class Login : BasePage
     {
+		private LoginViewModel VM { get; set; }
+		
         // Constructor
         public Login()
         {
             InitializeComponent();
+            VM = (LoginViewModel)DataContext;
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            //this.ClearHistory();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            NavigationService.RemoveBackEntry();
+        }
+
+		private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VM.Password = ((TextBox)sender).Text;
+        }
+
+        private void LoginTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+        	VM.Login = ((TextBox)sender).Text;
+        }
+		
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

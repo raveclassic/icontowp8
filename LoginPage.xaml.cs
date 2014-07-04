@@ -15,12 +15,12 @@ namespace iConto
 {
     public partial class LoginPage : BasePage
     {
-        private LoginViewModel VM { get; set; }
+        private IcontoLoginViewModel VM { get; set; }
         // Constructor
         public LoginPage()
         {
             InitializeComponent();
-            VM = (LoginViewModel)DataContext;
+            VM = (IcontoLoginViewModel)DataContext;
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();

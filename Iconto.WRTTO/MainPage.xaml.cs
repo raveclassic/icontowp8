@@ -8,18 +8,29 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Iconto.WRTTO.Resources;
+using Iconto.PCL.Common;
+using Iconto.WRTTO.ViewModel;
 
 namespace Iconto.WRTTO
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : BasePage
     {
+        private MainViewModel VM { get; set; }
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+            VM = (MainViewModel)DataContext;
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            VM.NavigatedToCommand.Execute(null);
         }
 
         // Sample code for building a localized ApplicationBar

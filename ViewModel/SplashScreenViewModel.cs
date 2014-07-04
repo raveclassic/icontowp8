@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using iConto.Model;
-using iConto.Model.REST.Entities;
-using iConto.Model.REST.Responses;
 using Iconto.PCL.Common;
+using Iconto.PCL.Services.Data;
+using Iconto.PCL.Services.Data.REST.Entities;
+using Iconto.PCL.Services.Data.REST.Responses;
 using Iconto.PCL.Services.Dialog;
 using Iconto.PCL.Services.Navigation;
 using Iconto.PCL.Services.Settings;

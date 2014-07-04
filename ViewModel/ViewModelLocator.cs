@@ -12,9 +12,9 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using iConto.Model;
 using iConto.ViewModel.Wallet;
 using Iconto.PCL.Services.Settings;
+using Iconto.PCL.Services.Data;
 
 namespace iConto.ViewModel
 {
@@ -31,17 +31,17 @@ namespace iConto.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-                SimpleIoc.Default.Register<ISettingsService, SettingsService>();
-            }
+            //if (ViewModelBase.IsInDesignModeStatic)
+            //{
+            //    SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+            //}
+            //else
+            //{
+            //    SimpleIoc.Default.Register<IDataService, DataService>();
+            //    SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+            //}
 
-            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<IcontoLoginViewModel>();
             SimpleIoc.Default.Register<SplashScreenViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<WalletCardsLayoutViewModel>();
@@ -53,11 +53,11 @@ namespace iConto.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public LoginViewModel Login
+        public IcontoLoginViewModel Login
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<LoginViewModel>();
+                return ServiceLocator.Current.GetInstance<IcontoLoginViewModel>();
             }
         }
 
