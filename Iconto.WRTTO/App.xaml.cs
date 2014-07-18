@@ -27,6 +27,7 @@ namespace Iconto.WRTTO
         /// </summary>
         public App()
         {
+
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 

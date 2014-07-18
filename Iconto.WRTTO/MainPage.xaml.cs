@@ -10,6 +10,8 @@ using Microsoft.Phone.Shell;
 using Iconto.WRTTO.Resources;
 using Iconto.PCL.Common;
 using Iconto.WRTTO.ViewModel;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Iconto.WRTTO
 {
@@ -25,12 +27,49 @@ namespace Iconto.WRTTO
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+            BuildApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             VM.NavigatedToCommand.Execute(null);
+        }
+
+        private void BuildApplicationBar()
+        {
+            var bar = new ApplicationBar()
+            {
+                IsVisible = false,
+                //BackgroundColor = Color.FromArgb(0xFF, 0x4a, 0x39, 0x6e),
+                //ForegroundColor = Colors.White,
+                IsMenuEnabled = true,
+                Opacity = 0.5f
+            };
+
+            var searchButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/search.png", UriKind.Relative))
+            {
+                Text = "Поиск"
+            };           
+
+            bar.Buttons.Add(searchButton);
+
+            var settingsMenuItem = new ApplicationBarMenuItem("Выход");
+            settingsMenuItem.Click += (sender, args) =>
+            {
+                VM.LogoutCommand.Execute(null);
+            };
+            bar.MenuItems.Add(settingsMenuItem);
+
+            this.ApplicationBar = bar;
+
+            Task.Delay(500).ContinueWith((task) =>
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    this.ApplicationBar.IsVisible = true;
+                });
+            });
         }
 
         // Sample code for building a localized ApplicationBar

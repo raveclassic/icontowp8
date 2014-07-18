@@ -49,6 +49,41 @@ namespace Iconto.PCL.Common
             }
         }
 
+        public void Prompt(string message, string title, Action<string> onPrompt, Action onCancel = null)
+        {
+            var textBox = new TextBox();
+            var messageBox = new CustomMessageBox()
+            {
+                Caption = title,
+                LeftButtonContent = "Подтвердить",
+                RightButtonContent = "Отмена",
+                Message = message,
+                Content = textBox
+            };
+            messageBox.Dismissed += (sender, args) =>
+            {
+                switch (args.Result)
+                {
+                    case CustomMessageBoxResult.LeftButton:
+                        onPrompt(textBox.Text);
+                        // Do something.
+                        break;
+                    case CustomMessageBoxResult.RightButton:
+                        // Do something.
+                        if (onCancel != null) onCancel();
+                        break;
+                    case CustomMessageBoxResult.None:
+                        // Do something.
+                        if (onCancel != null) onCancel();
+                        break;
+                    default:
+                        if (onCancel != null) onCancel();
+                        break;
+                }
+            };
+            messageBox.Show();
+        }
+
         #endregion        
 
         #region INavigationService members
@@ -76,14 +111,9 @@ namespace Iconto.PCL.Common
 
         public void ClearHistory()
         {
-            try
-            {
-                while (true)
-                {
-                    NavigationService.RemoveBackEntry();
-                }
-            }
-            catch { }
+            while (NavigationService.CanGoBack) {
+                NavigationService.RemoveBackEntry();
+            }            
         }
 
         #endregion

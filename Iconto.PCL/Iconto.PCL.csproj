@@ -86,6 +86,7 @@
     <Compile Include="Adapters\Encryption\EncryptedDataAdapter.cs" />
     <Compile Include="Adapters\Encryption\IEncryptedDataAdapter.cs" />
     <Compile Include="Clients\REST\CommonResponse.cs" />
+    <Compile Include="Clients\REST\Entities\Address.cs" />
     <Compile Include="Clients\REST\Entities\User.cs" />
     <Compile Include="Clients\REST\IRESTClient.cs" />
     <Compile Include="Clients\REST\RESTClient.cs" />

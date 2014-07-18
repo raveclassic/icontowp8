@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using Iconto.WRTTO.Resources;
 using Iconto.PCL.Common;
 using Iconto.WRTTO.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Iconto.WRTTO
 {
@@ -30,11 +31,18 @@ namespace Iconto.WRTTO
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            //this.ClearHistory();
+            this.ClearHistory();
+            Messenger.Default.Register<NotificationMessage>(this, "signup:complete", (_) =>
+            {
+                VM.Password = "";
+                this.LoginPivot.SelectedItem = this.LoginPivotItem;
+                PasswordTextBox.Focus();
+            });
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            Messenger.Default.Unregister<NotificationMessage>(this, "signup:complete");
             base.OnNavigatedFrom(e);
             NavigationService.RemoveBackEntry();
         }
@@ -48,7 +56,30 @@ namespace Iconto.WRTTO
         {
         	VM.Login = ((TextBox)sender).Text;
         }
-		
+
+        private void GoToSignupPivotButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.LoginPivot.SelectedItem = this.SignupPivotItem;
+        }
+
+        private void GoToLoginPivotButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.LoginPivot.SelectedItem = this.LoginPivotItem;
+        }
+
+        private void BasePage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.LoginPivot.SelectedItem == this.LoginPivotItem)
+            {
+                base.OnBackKeyPress(e);
+            }
+            else if (this.LoginPivot.SelectedItem == this.SignupPivotItem)
+            {
+                this.LoginPivot.SelectedItem = this.LoginPivotItem;
+                e.Cancel = true;
+            }
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

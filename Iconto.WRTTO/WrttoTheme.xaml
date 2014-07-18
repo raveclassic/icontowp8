@@ -7,6 +7,8 @@
     <SolidColorBrush x:Key="WrttoTurquoiseBrush" Color="#FF37b4b8"/>
     <SolidColorBrush x:Key="WrttoAccentTurquoiseBrush" Color="#FF2f999c"/>
 
+    <!--<Color x:Key="WrttoPurpleColor" R="0x4a" G="0x39" B="0x6e" A="0xFF"/>-->
+
     <CornerRadius x:Key="GlobalCornerRadius">4</CornerRadius>
     <Thickness x:Key="BaseBorderThickness">3</Thickness>
 

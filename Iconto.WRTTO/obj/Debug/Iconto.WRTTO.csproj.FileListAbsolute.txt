@@ -1,4 +1,7 @@
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\Icons\Search.png
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\Iconto.png
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\Logo.png
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\WrttoLogo.PNG
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Resources\wrtto.xaml
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\ApplicationIcon.png
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
@@ -83,12 +86,10 @@ C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\De
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\App.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Login.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\MainPage.g.cs
+C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\SplashScreen.g.cs
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Iconto.WRTTO.g.resources
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Iconto.WRTTO.Resources.AppResources.resources
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Iconto.WRTTO.csproj.GenerateResource.Cache
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Iconto.WRTTO.dll
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\Iconto.WRTTO.pdb
 C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\XapCacheFile.xml
-C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\obj\Debug\SplashScreen.g.cs
-C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\Iconto.png
-C:\Users\Kirill\Documents\Visual Studio 2012\Projects\iConto\Iconto.WRTTO\Bin\Debug\Assets\WrttoLogo.PNG
