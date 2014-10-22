@@ -15,6 +15,7 @@
         <ResourceDictionary>
         	<ResourceDictionary.MergedDictionaries>
         		<ResourceDictionary Source="WrttoTheme.xaml"/>
+        		<ResourceDictionary Source="/Iconto.PCL;component/Theme.xaml"/>
         	</ResourceDictionary.MergedDictionaries>
             <local:LocalizedStrings x:Key="LocalizedStrings" />
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />

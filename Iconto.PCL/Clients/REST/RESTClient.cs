@@ -105,7 +105,13 @@ namespace Iconto.PCL.Clients.REST
         }
         public async Task Post(string resource, dynamic data = null)
         {
-            CheckStatus(await Request(HttpMethod.Get, resource, data));
+            try
+            {
+                CheckStatus(await Request(HttpMethod.Get, resource, data));
+            }
+            catch (ProtocolViolationException pve)
+            {
+            }
         }
         public async Task Put(string resource, dynamic data = null)
         {
