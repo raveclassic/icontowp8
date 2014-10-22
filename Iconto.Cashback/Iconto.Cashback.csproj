@@ -183,7 +183,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iConto\Iconto.PCL\Iconto.PCL.csproj">
+    <ProjectReference Include="..\Iconto.PCL\Iconto.PCL.csproj">
       <Project>{1baab2fa-8547-44fc-964b-c8162856bc47}</Project>
       <Name>Iconto.PCL</Name>
     </ProjectReference>
